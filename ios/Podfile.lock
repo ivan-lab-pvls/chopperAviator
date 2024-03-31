@@ -1,4 +1,12 @@
 PODS:
+  - app_tracking_transparency (0.0.1):
+    - Flutter
+  - appsflyer_sdk (6.13.1):
+    - AppsFlyerFramework (= 6.13.1)
+    - Flutter
+  - AppsFlyerFramework (6.13.1):
+    - AppsFlyerFramework/Main (= 6.13.1)
+  - AppsFlyerFramework/Main (6.13.1)
   - Firebase/CoreOnly (10.22.0):
     - FirebaseCore (= 10.22.0)
   - Firebase/Messaging (10.22.0):
@@ -108,6 +116,8 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
+  - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -122,6 +132,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - Firebase
     - FirebaseABTesting
     - FirebaseCore
@@ -137,6 +148,10 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  app_tracking_transparency:
+    :path: ".symlinks/plugins/app_tracking_transparency/ios"
+  appsflyer_sdk:
+    :path: ".symlinks/plugins/appsflyer_sdk/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
@@ -161,6 +176,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  app_tracking_transparency: 5b1745ef9ade815f7455cb6a0848349589afb7c5
+  appsflyer_sdk: df2eb770c16a351ecb7b747ca1699494d3a4378f
+  AppsFlyerFramework: 971521cf5b890c2afeab2f2c91734547b8b169ca
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_core: 100945864b4aedce3cfef0c62ab864858bf013cf
   firebase_messaging: e65050bf9b187511d80ea3a4de7cf5573d2c7543
@@ -188,4 +206,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2

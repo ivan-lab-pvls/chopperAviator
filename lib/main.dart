@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:chopper_crew_app/chopper_crew_app.dart';
 import 'package:chopper_crew_app/firebase_options.dart';
 import 'package:chopper_crew_app/screens/chopper_dash/coins_bloc/coins_bloc.dart';
@@ -25,9 +27,13 @@ void main() async {
   await FirebaseRemoteConfig.instance.fetchAndActivate();
   await Ntfxs().activate();
   await reate();
+  tracker();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight
   ]);
 
   runApp(MultiBlocProvider(
@@ -53,7 +59,9 @@ void main() async {
           );
         } else {
           if (snapshot.data == true && reward != '') {
-            return BonusesDaily(amount: reward,);
+            return BonusesDaily(
+              amount: reward,
+            );
           } else {
             return ChopperCrewApp();
           }
@@ -61,6 +69,12 @@ void main() async {
       },
     ),
   ));
+}
+
+Future<void> tracker() async {
+  final TrackingStatus status =
+      await AppTrackingTransparency.requestTrackingAuthorization();
+  print(status);
 }
 
 late SharedPreferences prex;
@@ -82,7 +96,7 @@ Future<void> fs() async {
 }
 
 String reward = '';
-
+String camp = '';
 Future<bool> checkBonusesDaily() async {
   final datax = FirebaseRemoteConfig.instance;
   await datax.fetchAndActivate();
@@ -93,10 +107,29 @@ Future<bool> checkBonusesDaily() async {
   var request = await client.getUrl(uri);
   request.followRedirects = false;
   var response = await request.close();
+  tracker();
+  AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
+    afDevKey: 'doJsrj8CyhTUWPZyAYTByE',
+    appId: '6480248061',
+    showDebug: false,
+    timeToWaitForATTUserAuthorization: 50,
+    disableAdvertisingIdentifier: false,
+    disableCollectASA: false,
+    manualStart: true,
+  );
+
+  AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+  appsflyerSdk.initSdk(
+      registerConversionDataCallback: true,
+      registerOnAppOpenAttributionCallback: true,
+      registerOnDeepLinkingCallback: true);
+  appsflyerSdk.onInstallConversionData((data) {
+    camp = data['campaignId'];
+  });
   if (!fds.contains('nonechopp')) {
     if (response.headers.value(HttpHeaders.locationHeader).toString() !=
         exampleValue) {
-      reward = fds;
+      reward = '$fds&campaignid=$camp';
       return true;
     }
   }
